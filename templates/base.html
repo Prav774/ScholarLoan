@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ScholarLoan</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Your CSS must come AFTER Bootstrap so it wins, and with a cache-busting query -->
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v={% now 'U' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <!-- Tech Fonts (Orbitron + Sora) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================= Base / Layout ================ */
+    :root{
+      --accent-1:#2563eb; /* blue */
+      --accent-2:#06b6d4; /* cyan */
+      --text:#1e293b;     /* slate-800 */
+      --muted:#64748b;    /* slate-500 */
+      --card-bg:#ffffff;
+    }
+    html,body{height:100%}
+    body{
+      font-family: 'Sora', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      background:#f5f7fb;
+      color:var(--text);
+    }
+
+    /* Headings / Logo / Hero = Orbitron */
+    h1, h2, h3, .navbar-brand, .gradient-text {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: -0.5px;
+    }
+
+    /* ================= Navbar ================ */
+    .navbar{
+      background:#ffffff;
+      box-shadow:0 2px 12px rgba(0,0,0,.06);
+      padding:12px 0;
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .navbar.scrolled{ box-shadow:0 8px 30px rgba(0,0,0,.10); }
+    .navbar-brand{
+      font-weight:800;
+      letter-spacing:-.3px;
+      font-size:1.35rem;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .nav-link{
+      color:#475569 !important;
+      margin-left:14px;
+      font-weight:500;
+      transition: color .2s ease;
+    }
+    .nav-link:hover{ color:var(--accent-1) !important; }
+
+    .navbar .navbar-toggler { border: 0; }
+    .navbar .navbar-toggler .navbar-toggler-icon{
+      background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(30,41,59,0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* ================= Content shell ================ */
+    .content-wrapper{ margin-top:88px; margin-bottom:40px; }
+    .content-card{
+      background:var(--card-bg);
+      border-radius:14px;
+      padding:32px;
+      box-shadow:0 10px 30px rgba(2,8,23,.06);
+      animation:fadeUp .5s ease;
+    }
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)} }
+
+    /* ================= Hero ================ */
+    .hero{
+      min-height:60vh;
+      border-radius:20px;
+      padding:64px 24px;
+      background:linear-gradient(135deg,#eff6ff 0%, #e0f2fe 45%, #f5f3ff 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.6),
+        0 20px 60px rgba(2,8,23,.08);
+    }
+    .gradient-text{
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:-.5px;
+    }
+    .hero-sub{ color:var(--muted) }
+
+    /* ================= Buttons ================ */
+    .btn-accent{
+      background-image:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      border:0;
+      color:#fff !important;
+      padding:12px 24px;
+      border-radius:12px;
+      font-weight:600;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .btn-accent:hover,
+    .btn-accent:focus,
+    .btn-accent:active{
+      background-image:linear-gradient(90deg,var(--accent-1),var(--accent-2)) !important;
+      color:#fff !important;
+      transform:translateY(-2px);
+      box-shadow:0 12px 28px rgba(37,99,235,.28);
+    }
+
+    .btn-outline-accent{
+      --accent:var(--accent-1);
+      border:1.5px solid var(--accent);
+      color:var(--accent) !important;
+      background:transparent;
+      padding:12px 24px;
+      border-radius:12px;
+      font-weight:600;
+      transition: background .2s ease, box-shadow .2s ease, transform .15s ease;
+    }
+    .btn-outline-accent:hover,
+    .btn-outline-accent:focus{
+      background:rgba(37,99,235,.08) !important;
+      border-color:var(--accent) !important;
+      color:var(--accent) !important;
+      transform:translateY(-2px);
+      box-shadow:0 10px 24px rgba(37,99,235,.18);
+    }
+    a.btn:focus{ outline:none; box-shadow:none; }
+
+    .navbar .btn-accent:hover,
+    .navbar .btn-accent:focus,
+    .navbar .btn-accent:active{
+      background-image:linear-gradient(90deg,var(--accent-1),var(--accent-2)) !important;
+      color:#fff !important;
+    }
+
+    /* ================= Feature Cards ================ */
+    .feature-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.05);
+      border-radius:16px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px rgba(2,8,23,.06);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .feature-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 16px 36px rgba(37,99,235,.18);
+    }
+    .floating{ animation:float 3s ease-in-out infinite; }
+    @keyframes float{ 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <i class="fa-solid fa-graduation-cap me-2"></i> ScholarLoan
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'find_scholarships' %}">Scholarships</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'update_profile' %}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-accent" href="{% url 'logout' %}">
+              <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container content-wrapper">
+    <div class="content-card">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('.navbar');
+      if (window.scrollY > 16) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  </script>
+
+  <!-- Chatbot Floating Widget -->
+  <script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "lw2BEDHW_Bbqzv0RlQYbo",  // your bot ID
+        domain: "www.chatbase.co"
+    };
+
+    (function(){
+        var s = document.createElement("script");
+        s.src = "https://www.chatbase.co/embed.min.js";
+        s.defer = true;
+        document.body.appendChild(s);
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | ScholarLoan{% endblock %}
+{% block content %}
+
+<!-- Hero -->
+<section class="dash-hero container">
+  <div class="dash-hero-card glass">
+    <div>
+      <h1 class="dash-title">Welcome to <span>ScholarLoan</span></h1>
+      <p class="dash-sub">Track scholarships, explore loans, and keep your journey organized.</p>
+
+      <div class="d-flex flex-wrap gap-2 mt-3">
+        <a href="{% url 'find_scholarships' %}" class="btn btn-primary btn-lg rounded-pill px-4">🎓 Find Scholarships</a>
+        <a href="#" onclick="navigateTo('loans.html')" class="btn btn-outline-light btn-lg rounded-pill px-4">💰 Find Loans</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger rounded-pill px-4">🚪 Logout</a>
+      </div>
+    </div>
+    <img class="dash-hero-illo" 
+         src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1200&auto=format&fit=crop" 
+         alt="Graduation">
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="container mt-4">
+  <div class="row g-3">
+    <div class="col-6 col-lg-3">
+      <div class="stat glass">
+        <div class="stat-label">Saved</div>
+        <div class="stat-value">0</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat glass">
+        <div class="stat-label">Applied</div>
+        <div class="stat-value">0</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat glass">
+        <div class="stat-label">Deadlines this week</div>
+        <div class="stat-value">0</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat glass">
+        <div class="stat-label">Loan offers</div>
+        <div class="stat-value">0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick actions -->
+<section class="container mt-4">
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <a class="qcard glass" href="{% url 'find_scholarships' %}">
+        <div class="qicon">🔎</div>
+        <div>
+          <h5 class="mb-1">Smart Search</h5>
+          <p class="mb-0 text-muted small">Scholarships tailored by level, course, and country.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4">
+      <a class="qcard glass" href="#" onclick="navigateTo('loans.html')">
+        <div class="qicon">🏦</div>
+        <div>
+          <h5 class="mb-1">Loan Finder</h5>
+          <p class="mb-0 text-muted small">Compare student-friendly loans with low rates.</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4">
+      <a class="qcard glass" href="#">
+        <div class="qicon">🗓️</div>
+        <div>
+          <h5 class="mb-1">Deadline Tracker</h5>
+          <p class="mb-0 text-muted small">Never miss dates—sync to your calendar.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Recent section -->
+<section class="container my-4">
+  <div class="glass p-3 p-md-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Recently Viewed</h5>
+      <a href="{% url 'find_scholarships' %}" class="btn btn-sm btn-outline-light rounded-pill px-3">See all</a>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card-result p-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-semibold">DAAD Scholarship – Masters</div>
+              <div class="small text-muted">daad.de • Due in 9 days</div>
+            </div>
+            <a class="btn btn-sm btn-outline-light rounded-pill" href="#">Open</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card-result p-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-semibold">NSP Merit Scholarship</div>
+              <div class="small text-muted">scholarships.gov.in • Due in 14 days</div>
+            </div>
+            <a class="btn btn-sm btn-outline-light rounded-pill" href="#">Open</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="container mb-5">
+  <div class="cta glass d-flex flex-column flex-md-row align-items-center justify-content-between">
+    <div>
+      <h5 class="mb-1">Get weekly matches</h5>
+      <p class="mb-0 text-muted">We’ll send a shortlist of fresh scholarships every Monday.</p>
+    </div>
+    <a href="{% url 'find_scholarships' %}" class="btn btn-primary rounded-pill px-4 mt-3 mt-md-0">Enable</a>
+  </div>
+</section>
+
+<script>
+function navigateTo(page){ window.location.href = page; }
+</script>
+{% endblock %}

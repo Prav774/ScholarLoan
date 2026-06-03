@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Update Profile | ScholarLoan{% endblock %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+  <div class="glass p-4 p-md-5" style="max-width:500px; width:100%;">
+    <h2 class="fw-bold mb-4 text-center">Update Your Profile</h2>
+    <form method="POST" class="d-grid gap-3">
+      {% csrf_token %}
+      
+      <div>
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" required>
+      </div>
+
+      <div>
+        <label class="form-label">Age</label>
+        <input type="number" name="age" class="form-control" required>
+      </div>
+
+      <div>
+        <label class="form-label">Field of Study</label>
+        <input type="text" name="field" class="form-control" required>
+      </div>
+
+      <div>
+        <label class="form-label">Country</label>
+        <input type="text" name="country" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary rounded-pill mt-3">💾 Save</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

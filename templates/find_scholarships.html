@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  /* Import Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&family=Orbitron:wght@700&display=swap');
+
+  /* ============== Unified Aqua Palette ============== */
+  :root{
+    --bg1:#e7f6ff;   /* very light sky */
+    --bg2:#dcf9f1;   /* mint tint */
+    --bg3:#dbeafe;   /* pale blue */
+    --ink:#0f172a;   /* text */
+    --muted:#5b6b83; /* secondary text */
+
+    --accent:#2f80ed;   /* main accent (buttons/links) */
+    --accent-2:#56ccf2; /* lighter accent for hover */
+    --accent-3:#6ee7f0; /* teal hint */
+  }
+
+  /* ============== Running Background ============== */
+  body{
+    margin:0;
+    background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3));
+    background-size: 400% 400%;
+    animation: gradientShift 22s ease-in-out infinite;
+    min-height:100vh;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+  }
+  @keyframes gradientShift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* ============== Frosted Containers ============== */
+  .pane{
+    position:relative;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(10px);
+    border:1px solid rgba(47,128,237,.12);
+    border-radius:16px;
+    box-shadow: 0 12px 28px rgba(2,8,23,.06);
+  }
+
+  /* ============== Hero Section ============== */
+  .cool-hero{
+    position:relative; overflow:hidden; border-radius:18px;
+    padding:28px 22px;
+    background: linear-gradient(120deg, rgba(47,128,237,.10), rgba(86,204,242,.10));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 26px rgba(2,8,23,.06);
+  }
+  .cool-hero::before{
+    content:""; position:absolute; inset:-35%;
+    background: radial-gradient(60% 60% at 20% 30%, rgba(86,204,242,.28), transparent 60%),
+                radial-gradient(50% 50% at 80% 70%, rgba(47,128,237,.28), transparent 60%);
+    filter: blur(28px);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift{
+    0%  { transform: translate3d(-2%, -2%, 0) scale(1.02); }
+    100%{ transform: translate3d(2%, 2%, 0)  scale(1.06); }
+  }
+
+  /* =================== Typography =================== */
+  h3, h5 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: var(--accent);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  ::placeholder {
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  .result-card h6 a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    transition: color .25s ease;
+  }
+  .result-card h6 a:hover {
+    color: var(--accent-2);
+  }
+
+  .result-card p.small {
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  /* Inputs */
+  .form-control,.form-select{
+    height:48px;border-radius:12px; border:1px solid rgba(15,23,42,.08);
+    transition:box-shadow .2s ease, border-color .2s ease;
+  }
+  .form-control:focus,.form-select:focus{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 .2rem rgba(47,128,237,.16);
+  }
+
+  /* Radio buttons */
+  .btn-outline-primary{
+    --bs-btn-color: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-bg: var(--accent);
+    --bs-btn-hover-border-color: var(--accent);
+    --bs-btn-active-bg: var(--accent);
+    --bs-btn-active-border-color: var(--accent);
+    --bs-btn-disabled-color: var(--accent);
+  }
+
+  /* Primary button */
+  .btn-cool{
+    height:48px; border:0; border-radius:12px; font-weight:800; color:#fff;
+    background-image: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    background-size: 200% 100%;
+    box-shadow: 0 6px 18px rgba(47,128,237,.25);
+    transition: transform .15s ease, box-shadow .25s ease, background-position .8s ease;
+  }
+  .btn-cool:hover{ background-position: 100% 0; transform: translateY(-2px); box-shadow:0 14px 30px rgba(47,128,237,.28) }
+  .btn-cool:active{ transform: translateY(0) }
+
+  /* Outline Apply button */
+  .btn-outline-accent{
+    --g: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    background: #fff; border:2px solid transparent; border-radius:12px; color: var(--accent);
+    background-image: linear-gradient(#fff,#fff), var(--g);
+    background-origin: border-box; background-clip: padding-box, border-box;
+    transition: transform .15s ease, box-shadow .25s ease, color .2s ease;
+  }
+  .btn-outline-accent:hover{ transform: translateY(-2px); box-shadow:0 10px 22px rgba(47,128,237,.22); color:#0b1b36 }
+
+  /* Result cards */
+  .result-card{
+    border-radius:16px; background:#fff; border:1px solid rgba(15,23,42,.06);
+    transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
+    position: relative;
+  }
+  .result-card:hover{ transform: translateY(-3px); box-shadow:0 14px 32px rgba(2,8,23,.08); border-color:transparent }
+  .result-card:hover::after {
+  content:""; 
+  position:absolute; 
+  inset:-1px; 
+  z-index:-1; 
+  border-radius:inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  opacity: 0.35;   /* keep it soft so text stays visible */
+}
+
+
+  /* Skeletons */
+  .skeleton{
+    border-radius:12px;height:92px;
+    background:linear-gradient(90deg,#eee 25%,#f6f6f6 37%,#eee 63%);
+    background-size:400% 100%; animation:shimmer 1.2s infinite;
+  }
+  @keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+</style>
+
+<!-- Header -->
+<div class="cool-hero mb-4">
+  <h3 class="mb-1"><i class="fa-regular fa-compass me-2"></i> Scholarship Finder</h3>
+  <p class="mb-0">Choose <strong>School</strong> or <strong>College</strong>, pick your <strong>stream</strong>, add marks/CGPA, then press <strong>Get All</strong>.</p>
+</div>
+
+<!-- Form (top) -->
+<div class="pane p-4 mb-4">
+  <form id="finderForm" method="POST" novalidate>
+    {% csrf_token %}
+
+    <!-- School vs College -->
+    <div class="mb-3">
+      <label class="form-label">Are you a School or College student?</label>
+      <div class="d-flex gap-2 flex-wrap">
+        <input type="radio" class="btn-check" name="user_type" id="optSchool" value="school" checked>
+        <label class="btn btn-outline-primary" for="optSchool"><i class="fa-solid fa-user-graduate me-1"></i> School</label>
+
+        <input type="radio" class="btn-check" name="user_type" id="optCollege" value="college">
+        <label class="btn btn-outline-primary" for="optCollege"><i class="fa-solid fa-building-columns me-1"></i> College</label>
+      </div>
+    </div>
+
+    <!-- Common -->
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Full Name</label>
+        <input type="text" name="name" class="form-control" placeholder="John Doe" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" placeholder="example@email.com" required>
+      </div>
+    </div>
+
+    <!-- School block -->
+    <div id="schoolBlock" class="mt-3">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Stream (School)</label>
+          <select name="school_stream" class="form-select">
+            <option value="biology">Biology</option>
+            <option value="computer science">Computer Science</option>
+            <option value="accounts">Accounts</option>
+            <option value="">Other/Not sure</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Marks / Percentage</label>
+          <input type="number" name="marks" step="0.1" min="0" max="100" class="form-control" placeholder="e.g., 92.5">
+        </div>
+      </div>
+    </div>
+
+    <!-- College block -->
+    <div id="collegeBlock" class="mt-3" style="display:none;">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Stream (College)</label>
+          <select name="college_stream" class="form-select">
+            <option value="engineering">Engineering</option>
+            <option value="arts and science">Arts and Science</option>
+            <option value="bbl">BBL (Business & Law)</option>
+            <option value="mba">MBA</option>
+            <option value="pharmacy">Pharmacy</option>
+            <option value="law">Law (LLB/LLM)</option>
+            <option value="medicine">Medicine (MBBS/MD)</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="commerce">Commerce</option>
+            <option value="design">Design/Fashion</option>
+            <option value="journalism">Journalism & Media</option>
+            <option value="education">Education (B.Ed / M.Ed)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">CGPA</label>
+          <input type="number" name="cgpa" step="0.01" min="0" max="10" class="form-control" placeholder="e.g., 8.3">
+        </div>
+      </div>
+    </div>
+
+    <!-- Location + Category -->
+    <div class="row g-3 mt-1">
+      <div class="col-md-6">
+        <label class="form-label">Country</label>
+        <input type="text" name="country" class="form-control" placeholder="India" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-select">
+          <option value="general">General</option>
+          <option value="sc_st">SC/ST</option>
+          <option value="obc">OBC</option>
+          <option value="minority">Minority</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mt-4 d-grid">
+      <button class="btn btn-cool" type="submit">
+        <i class="fa-solid fa-magnifying-glass me-1"></i> Get All Scholarships
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Results (bottom full-width) -->
+<div class="pane p-4 mt-4">
+  <h5 class="mb-3" style="font-family:'Orbitron',sans-serif;">Results</h5>
+  <div id="loadingArea" style="display:none;">
+    <div class="skeleton mb-2"></div>
+    <div class="skeleton mb-2"></div>
+    <div class="skeleton mb-2"></div>
+  </div>
+
+  {% if scholarships %}
+    <div id="resultList" class="vstack gap-3">
+      {% for s in scholarships %}
+        <div class="result-card p-3">
+          <h6 class="m-0">
+            <a href="{{ s.link }}" target="_blank" class="text-decoration-none">{{ s.title }}</a>
+          </h6>
+          <div class="small text-muted">
+            {% if s.provider %}<i class="fa-solid fa-globe me-1"></i>{{ s.provider }}{% endif %}
+            {% if s.amount %} • <i class="fa-solid fa-coins mx-1"></i>{{ s.amount }}{% endif %}
+            {% if s.deadline %} • <i class="fa-regular fa-calendar mx-1"></i>{{ s.deadline }}{% endif %}
+          </div>
+          {% if s.snippet %}<p class="small mt-2 mb-0 text-secondary">{{ s.snippet }}</p>{% endif %}
+          <div class="mt-2">
+            <a class="btn btn-outline-accent btn-sm fw-semibold" href="{{ s.link }}" target="_blank" rel="noopener">
+              Apply <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% else %}
+    {% if request.method == "POST" %}
+      <div class="text-center text-danger">No scholarships found. Try different filters.</div>
+    {% else %}
+      <div class="text-center text-muted">Fill the form and press <strong>Get All Scholarships</strong>.</div>
+    {% endif %}
+  {% endif %}
+</div>
+
+
+<script>
+  // Toggle school/college blocks
+  const school = document.getElementById('optSchool');
+  const college = document.getElementById('optCollege');
+  const schoolBlock = document.getElementById('schoolBlock');
+  const collegeBlock = document.getElementById('collegeBlock');
+  function toggleBlocks(){
+    if (college.checked){
+      collegeBlock.style.display='block';
+      schoolBlock.style.display='none';
+    } else {
+      collegeBlock.style.display='none';
+      schoolBlock.style.display='block';
+    }
+  }
+  [school,college].forEach(r=>r.addEventListener('change',toggleBlocks));
+  toggleBlocks();
+
+  // Show skeletons on submit
+  document.getElementById('finderForm').addEventListener('submit', ()=> {
+    document.getElementById('loadingArea').style.display='block';
+  });
+</script>
+
+{% endblock %}
