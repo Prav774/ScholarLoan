@@ -125,3 +125,71 @@ form .form-control:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 .25rem rgba(37,99,235,.25);
 }
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #0f172a;
+}
+
+.feature-card {
+    background: #ffffff;
+    border-radius: 20px;
+    transition: all 0.35s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.feature-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    color: #111827;
+}
+
+.feature-card p {
+    font-family: 'Sora', sans-serif;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-wrapper i {
+    font-size: 32px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.bg-primary-subtle i {
+    color: #0d6efd;
+}
+
+.bg-success-subtle i {
+    color: #198754;
+}
+
+.bg-warning-subtle i {
+    color: #f59e0b;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
