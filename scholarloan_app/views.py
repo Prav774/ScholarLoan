@@ -24,8 +24,8 @@ import requests
 from django.shortcuts import render
 
 # Google Custom Search API credentials
-API_KEY = "AIzaSyAJB4kLa5tt-L6Wbz8-wH8Ui4QvhO5fYAk"
-SEARCH_ENGINE_ID = "b28f613d1bafe40d5"
+API_KEY = "xxxxxxxxxxxxxxxx"
+SEARCH_ENGINE_ID = "xxxxxxxxxxxxxx"
 
 def find_scholarships(request):
     scholarships = []
